@@ -18,7 +18,7 @@ CLEANFILES+=	debian/mkdiridx.tmp
 
 # mostly ../.gitignore minus debian/copyright
 CLEANFILES+=	*.log
-CLEANFILES+=	LICENCE.js
+CLEANFILES+=	_site
 CLEANFILES+=	coverage
 CLEANFILES+=	dist
 CLEANFILES+=	disttmp
