@@ -1,8 +1,10 @@
-dygraphs (2.1.2-1) UNRELEASED; urgency=medium
+dygraphs (2.1.2-1) unstable; urgency=low
 
   * Switch to nōn-native packaging
+  * New release, having taken upstream hat
+  * Update lintian overrides
 
- -- Thorsten Glaser <tg@mirbsd.de>  Thu, 15 Dec 2022 01:38:07 +0100
+ -- Thorsten Glaser <tg@mirbsd.de>  Thu, 15 Dec 2022 02:18:34 +0100
 
 dygraphs (2.1.1) unstable; urgency=medium
 
