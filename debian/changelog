@@ -1,3 +1,9 @@
+dygraphs (2.1.2-1) UNRELEASED; urgency=medium
+
+  * Switch to nōn-native packaging
+
+ -- Thorsten Glaser <tg@mirbsd.de>  Thu, 15 Dec 2022 01:38:07 +0100
+
 dygraphs (2.1.1) unstable; urgency=medium
 
   * Initial release. (Closes: #749603)
