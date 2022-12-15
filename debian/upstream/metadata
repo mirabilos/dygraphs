@@ -1,0 +1,15 @@
+{
+  "Archive": "GitHub",
+  "Bug-Database": "https://github.com/danvk/dygraphs/issues",
+  "Bug-Submit": "https://github.com/danvk/dygraphs/issues/new/choose",
+  "Changelog": "https://dygraphs.com/versions.html",
+  "Documentation": "https://dygraphs.com/",
+  "Gallery": "https://dygraphs.com/gallery/",
+  "Name": "dygraphs",
+  "Repository": "git@github.com:danvk/dygraphs.git",
+  "Repository-Browse": "https://github.com/danvk/dygraphs",
+  "Screenshots": [
+    "https://dygraphs.com/Screenshot.png"
+  ],
+  "Webservice": "https://dygraphs.com/fiddle/"
+}
