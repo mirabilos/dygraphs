@@ -101,6 +101,15 @@ Legend.prototype.select = function(e) {
     return;
   }
 
+  var html = Legend.generateLegendHTML(e.dygraph, xValue, points, this.one_em_width_, row);
+  if (html instanceof Node && html.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+    this.legend_div_.innerHTML = '';
+    this.legend_div_.appendChild(html);
+  } else
+    this.legend_div_.innerHTML = html;
+  // must be done now so offsetWidth isn’t 0…
+  this.legend_div_.style.display = '';
+
   if (legendMode === 'follow') {
     // create floating legend div
     var area = e.dygraph.plotter_.area;
@@ -132,15 +141,13 @@ Legend.prototype.select = function(e) {
     e.dygraph.graphDiv.appendChild(this.legend_div_);
     this.legend_div_.style.left = yAxisLabelWidth + leftLegend + "px";
     this.legend_div_.style.top = topLegend + "px";
+  } else if (legendMode === 'onmouseover' && this.is_generated_div_) {
+    // synchronise this with Legend.prototype.predraw below
+    var area = e.dygraph.plotter_.area;
+    var labelsDivWidth = this.legend_div_.offsetWidth;
+    this.legend_div_.style.left = area.x + area.w - labelsDivWidth - 1 + "px";
+    this.legend_div_.style.top = area.y + "px";
   }
-
-  var html = Legend.generateLegendHTML(e.dygraph, xValue, points, this.one_em_width_, row);
-  if (html instanceof Node && html.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
-    this.legend_div_.innerHTML = '';
-    this.legend_div_.appendChild(html);
-  } else
-    this.legend_div_.innerHTML = html;
-  this.legend_div_.style.display = '';
 };
 
 Legend.prototype.deselect = function(e) {
@@ -180,7 +187,8 @@ Legend.prototype.predraw = function(e) {
 
   // TODO(danvk): only use real APIs for this.
   e.dygraph.graphDiv.appendChild(this.legend_div_);
-  var area = e.dygraph.getArea();
+  // synchronise this with Legend.prototype.select above
+  var area = e.dygraph.plotter_.area;
   var labelsDivWidth = this.legend_div_.offsetWidth;
   this.legend_div_.style.left = area.x + area.w - labelsDivWidth - 1 + "px";
   this.legend_div_.style.top = area.y + "px";

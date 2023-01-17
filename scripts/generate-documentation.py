@@ -58,11 +58,13 @@ def find_braces(txt):
   return out
 
 ext_tests = []
+gallery_files = {}
 
 def search_files(type, files):
   # Find text followed by a colon. These won't all be options, but those that
   # have the same name as a Dygraph option probably will be.
   prop_re = re.compile(r'\b([a-zA-Z0-9]+) *:')
+  gf_re = re.compile(r'//galleryActive=(true|false)$', re.MULTILINE)
   for test_file in files:
     if os.path.isfile(test_file): # Basically skips directories
       with open(test_file, 'rt',
@@ -76,23 +78,33 @@ def search_files(type, files):
       # Hack for slipping past gallery demos that have title in their attributes
       # so they don't appear as reasons for the demo to have 'title' options.
       if type == "gallery":
+        ga = re.findall(gf_re, text)
+        if ga:
+          ga = ga[0] == "true"
+        else:
+          # not annotated
+          ga = None
+        gallery_files[test_file] = ga
         idx = text.find("function(")
         if idx >= 0:
           text = text[idx:]
       braced_html = find_braces(text)
-      if debug_tests:
-        print(braced_html)
+      if test_file in debug_tests:
+        print("\033[0m" + re.sub(prop_re, lambda m: "\033[1;31m" + m.group(0) + "\033[0m", braced_html))
+        print("\033[1;34m==================================================================\033[0m")
 
       ms = re.findall(prop_re, braced_html)
+      if test_file in debug_tests:
+        print('\n'.join(sorted(set(ms))))
       for opt in ms:
-        if debug_tests: print('\n'.join(ms))
         if opt in docs and test_file not in docs[opt][type]:
           docs[opt][type].append(test_file)
 
 search_files("tests", glob.glob("tests/*.html"))
 search_files("gallery", glob.glob("gallery/*.js")) #TODO add grep "Gallery.register\("
 
-if debug_tests: sys.exit(0)
+if debug_tests:
+  sys.exit(0)
 
 # Extract a labels list.
 labels = []
@@ -112,17 +124,14 @@ print("""<!--#set var="pagetitle" value="options reference" -->
 
 <link rel="stylesheet" type="text/css" href="options.css" />
 
-""")
-
-print("""
 <div class="col-lg-3">
 <div class="dygraphs-side-nav affix-top" data-spy="affix" data-offset-top="0">
 <ul class='nav'>
   <li><a href="#usage">Usage</a>
-""")
+""".strip())
 for label in sorted(labels):
-  print('  <li><a href="#%s">%s</a>\n' % (encode_anchor(label), label))
-print('</ul></div></div>\n\n')
+  print('  <li><a href="#%s">%s</a>' % (encode_anchor(label), label))
+print('</ul></div></div>\n')
 
 print("""
 <div id='content' class='col-lg-9'>
@@ -174,6 +183,13 @@ def test_fmt(f):
     res += '<b class="extlink" title="WARNING: accesses external resources (Google jsapi)">⚠</b>'
   return res
 
+def gallery_fmt(f):
+  if gallery_files[f]:
+    res = '<a href="%s">%s</a>' % (urlify_gallery(f), gallery_name(f))
+  else:
+    res = '<font color="#9999FF" title="inactive">%s</a>' % gallery_name(f)
+  return res
+
 for label in sorted(labels):
   print('<a name="%s"></a><h3>%s</h3>\n' % (encode_anchor(label), label))
 
@@ -184,19 +200,18 @@ for label in sorted(labels):
     if not tests:
       examples_html = '<font color=red>NONE</font>'
     else:
-      examples_html = ' '.join(test_fmt(f) for f in sorted(tests))
+      examples_html = '; '.join(test_fmt(f) for f in sorted(tests, key=test_name))
 
     gallery = opt['gallery']
     if not gallery:
       gallery_html = '<font color=red>NONE</font>'
     else:
-      gallery_html = ' '.join(
-        '<a href="%s">%s</a>' % (urlify_gallery(f), gallery_name(f)) for f in sorted(gallery))
+      gallery_html = '; '.join(gallery_fmt(f) for f in sorted(gallery, key=gallery_name))
 
     if 'parameters' in opt:
       parameters = opt['parameters']
-      parameters_html = '\n'.join("<i>%s</i>: %s<br/>" % (p[0], p[1]) for p in parameters)
-      parameters_html = "\n  </p><div class='parameters'>\n%s\n  </div><p>" % (parameters_html);
+      parameters_html = '\n'.join("<tr><th>%s:</th><td>%s</td></tr>" % (p[0], p[1]) for p in parameters)
+      parameters_html = "\n  </p><div class='parameters'><table>\n%s\n  </table></div><p>" % (parameters_html);
     else:
       parameters_html = ''
 
@@ -213,10 +228,10 @@ for label in sorted(labels):
   </p><p>
   <i>Type: %(type)s</i><br/>%(parameters)s
   <i>Default: %(default)s</i>
-  </p><p>
-  Gallery Samples: %(gallery_html)s<br/>
-  Other Examples: %(examples_html)s<br/>
-  </p></div>
+  </p><table class="gallerylinks">
+  <tr><th>Gallery Samples:</th><td>%(gallery_html)s</td></tr>
+  <tr><th>Other Examples:</th><td>%(examples_html)s</td></tr>
+  </table></div>
   """ % { 'name': opt_name,
           'namenc': encode_anchor(opt_name),
           'type': opt['type'],
