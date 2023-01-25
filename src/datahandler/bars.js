@@ -49,11 +49,12 @@ BarsHandler.prototype.extractSeries = function(rawData, seriesIndex, options) {
  *          data format where series[i] = [x,y,{extras}].
  * @param {!number} rollPeriod The number of points over which to average the data
  * @param {!DygraphOptions} options The dygraph options.
+ * @param {!number} seriesIndex Index of the series this was extracted from.
  * TODO(danvk): be more specific than "Array" here.
  * @return {!Array.<[!number,?number,?]>} the rolled series.
  */
 BarsHandler.prototype.rollingAverage =
-    function(series, rollPeriod, options) {
+    function(series, rollPeriod, options, seriesIndex) {
   // Not implemented here, must be extended.
 };
 
@@ -70,7 +71,7 @@ BarsHandler.prototype.onPointsCreated_ = function(series, points) {
 };
 
 /** @inheritDoc */
-BarsHandler.prototype.getExtremeYValues = function(series, dateWindow, options) {
+BarsHandler.prototype.getExtremeYValues = function(series, dateWindow, stepPlot) {
   var minY = null, maxY = null, y;
 
   var firstIdx = 0;

@@ -78,7 +78,7 @@ import GVizChart from './dygraph-gviz';
  *
  * @constructor
  * @param {div | String} div A div or the id of a div into which to construct
- * the chart.
+ * the chart. Must not have any padding.
  * @param {String | Function} file A file containing CSV data or a function
  * that returns this data. The most basic expected format for each line is
  * "YYYY/MM/DD,val1,val2,...". For more information, see
@@ -158,6 +158,13 @@ Dygraph.prototype.__init__ = function(div, file, attrs) {
   // Clear the div. This ensure that, if multiple dygraphs are passed the same
   // div, then only one will be drawn.
   div.innerHTML = "";
+
+  const resolved = window.getComputedStyle(div, null);
+  if (resolved.paddingLeft !== "0px" ||
+      resolved.paddingRight !== "0px" ||
+      resolved.paddingTop !== "0px" ||
+      resolved.paddingBottom !== "0px")
+    console.error('Main div contains padding; graph will misbehave');
 
   // For historical reasons, the 'width' and 'height' options trump all CSS
   // rules _except_ for an explicit 'width' or 'height' on the div.
@@ -364,7 +371,7 @@ Dygraph.prototype.toString = function() {
  * @param {string} [seriesName] The name of the series to which the option
  * will be applied. If no per-series value of this option is available, then
  * the global value is returned. This is optional.
- * @return { ... } The value of the option.
+ * @return {...} The value of the option.
  */
 Dygraph.prototype.attr_ = function(name, seriesName) {
   if (typeof process !== 'undefined' && process.env.NODE_ENV != 'production') {
@@ -454,7 +461,7 @@ Dygraph.prototype.getOptionForAxis = function(name, axis) {
 /**
  * @private
  * @param {string} axis The name of the axis (i.e. 'x', 'y' or 'y2')
- * @return { ... } A function mapping string -> option value
+ * @return {...} A function mapping string -> option value
  */
 Dygraph.prototype.optionsViewForAxis_ = function(axis) {
   var self = this;
@@ -856,6 +863,28 @@ Dygraph.prototype.createInterface_ = function() {
     // Update when the window is resized.
     // TODO(danvk): drop frames depending on complexity of the chart.
     this.addAndTrackEvent(window, 'resize', this.resizeHandler_);
+
+    this.resizeObserver_ = null;
+    var resizeMode = this.getStringOption('resizable');
+    if ((typeof(ResizeObserver) === 'undefined') &&
+        (resizeMode !== "no")) {
+      console.error('ResizeObserver unavailable; ignoring resizable property');
+      resizeMode = "no";
+    }
+    if (resizeMode === "horizontal" ||
+        resizeMode === "vertical" ||
+        resizeMode === "both") {
+      enclosing.style.resize = resizeMode;
+    } else if (resizeMode !== "passive") {
+      resizeMode = "no";
+    }
+    if (resizeMode !== "no") {
+      const maindivOverflow = window.getComputedStyle(enclosing).overflow;
+      if (window.getComputedStyle(enclosing).overflow === 'visible')
+        enclosing.style.overflow = 'hidden';
+      this.resizeObserver_ = new ResizeObserver(this.resizeHandler_);
+      this.resizeObserver_.observe(enclosing);
+    }
   }
 };
 
@@ -912,8 +941,12 @@ Dygraph.prototype.destroy = function() {
   utils.removeEvent(window, 'mouseout', this.mouseOutHandler_);
   utils.removeEvent(this.mouseEventElement_, 'mousemove', this.mouseMoveHandler_);
 
-  // remove window handlers
-  utils.removeEvent(window,'resize', this.resizeHandler_);
+  // dispose of resizing handlers
+  if (this.resizeObserver_) {
+    this.resizeObserver_.disconnect();
+    this.resizeObserver_ = null;
+  }
+  utils.removeEvent(window, 'resize', this.resizeHandler_);
   this.resizeHandler_ = null;
 
   removeRecursive(this.maindiv_);
@@ -1778,11 +1811,15 @@ Dygraph.prototype.updateSelection_ = function(opt_animFraction) {
  * hover dots on the chart).
  * @param {seriesName} optional series name to highlight that series with the
  * the highlightSeriesOpts setting.
- * @param { locked } optional If true, keep seriesName selected when mousing
+ * @param {locked} optional If true, keep seriesName selected when mousing
  * over the graph, disabling closest-series highlighting. Call clearSelection()
  * to unlock it.
+ * @param {trigger_highlight_callback} optional If true, trigger any
+ * user-defined highlightCallback if highlightCallback has been set.
  */
-Dygraph.prototype.setSelection = function(row, opt_seriesName, opt_locked) {
+Dygraph.prototype.setSelection = function setSelection(row, opt_seriesName,
+                                                       opt_locked,
+                                                       opt_trigger_highlight_callback) {
   // Extract the points we've selected
   this.selPoints_ = [];
 
@@ -1833,6 +1870,18 @@ Dygraph.prototype.setSelection = function(row, opt_seriesName, opt_locked) {
 
   if (changed) {
     this.updateSelection_(undefined);
+
+    if (opt_trigger_highlight_callback) {
+      var callback = this.getFunctionOption("highlightCallback");
+      if (callback) {
+        var event = {};
+        callback.call(this, event,
+          this.lastx_,
+          this.selPoints_,
+          this.lastRow_,
+          this.highlightSet_);
+      }
+    }
   }
   return changed;
 };
@@ -2016,7 +2065,7 @@ Dygraph.prototype.predraw_ = function() {
     // var logScale = this.attr_('logscale', i); // TODO(klausw): this looks wrong // konigsberg thinks so too.
     var series = this.dataHandler_.extractSeries(this.rawData_, i, this.attributes_);
     if (this.rollPeriod_ > 1) {
-      series = this.dataHandler_.rollingAverage(series, this.rollPeriod_, this.attributes_);
+      series = this.dataHandler_.rollingAverage(series, this.rollPeriod_, this.attributes_, i);
     }
 
     this.rolledSeries_.push(series);
@@ -2240,7 +2289,7 @@ Dygraph.prototype.gatherDatasets_ = function(rolledSeries, dateWindow) {
 
     var seriesName = this.attr_("labels")[seriesIdx];
     var seriesExtremes = this.dataHandler_.getExtremeYValues(series,
-        dateWindow, this.getBooleanOption("stepPlot",seriesName));
+        dateWindow, this.getBooleanOption("stepPlot", seriesName));
 
     var seriesPoints = this.dataHandler_.seriesToPoints(series,
         seriesName, boundaryIds[seriesIdx-1][0]);

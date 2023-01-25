@@ -663,7 +663,7 @@ rangeSelector.prototype.computeCombinedSeriesAndLimits_ = function() {
     if (!includeSeries[i]) continue;
     var series = dataHandler.extractSeries(g.rawData_, i, options);
     if (g.rollPeriod() > 1) {
-      series = dataHandler.rollingAverage(series, g.rollPeriod(), options);
+      series = dataHandler.rollingAverage(series, g.rollPeriod(), options, i);
     }
 
     rolledSeries.push(series);
@@ -766,7 +766,9 @@ rangeSelector.prototype.drawInteractiveLayer_ = function() {
     var leftHandleCanvasPos = Math.max(margin, zoomHandleStatus.leftHandlePos - this.canvasRect_.x);
     var rightHandleCanvasPos = Math.min(width, zoomHandleStatus.rightHandlePos - this.canvasRect_.x);
 
-    ctx.fillStyle = 'rgba(240, 240, 240, ' + this.getOption_('rangeSelectorAlpha').toString() + ')';
+    const veilColour = this.getOption_('rangeSelectorVeilColour');
+    ctx.fillStyle = veilColour ? veilColour :
+      ('rgba(240, 240, 240, ' + this.getOption_('rangeSelectorAlpha').toString() + ')');
     ctx.fillRect(0, 0, leftHandleCanvasPos, this.canvasRect_.h);
     ctx.fillRect(rightHandleCanvasPos, 0, this.canvasRect_.w - rightHandleCanvasPos, this.canvasRect_.h);
 

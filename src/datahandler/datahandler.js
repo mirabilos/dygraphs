@@ -156,9 +156,10 @@ handler.prototype.onPointsCreated_ = function(series, points) {
  *          data format where series[i] = [x,y,{extras}].
  * @param {!number} rollPeriod The number of points over which to average the data
  * @param {!DygraphOptions} options The dygraph options.
+ * @param {!number} seriesIndex Index of the series this was extracted from.
  * @return {!Array.<[!number,?number,?]>} the rolled series.
  */
-handler.prototype.rollingAverage = function(series, rollPeriod, options) {
+handler.prototype.rollingAverage = function(series, rollPeriod, options, seriesIndex) {
 };
 
 /**
@@ -168,11 +169,11 @@ handler.prototype.rollingAverage = function(series, rollPeriod, options) {
  *     data format where series[i] = [x, y, {extras}].
  * @param {!Array.<number>} dateWindow The x-value range to display with
  *     the format: [min, max].
- * @param {!DygraphOptions} options The dygraph options.
+ * @param {boolean} stepPlot Whether the stepPlot option is set.
  * @return {Array.<number>} The low and high extremes of the series in the
  *     given window with the format: [low, high].
  */
-handler.prototype.getExtremeYValues = function(series, dateWindow, options) {
+handler.prototype.getExtremeYValues = function(series, dateWindow, stepPlot) {
 };
 
 /**
@@ -183,7 +184,7 @@ handler.prototype.getExtremeYValues = function(series, dateWindow, options) {
  * @param {!Array.<Dygraph.PointType>} points The points passed to
  *          the plotter.
  * @param {!Object} axis The axis on which the series will be plotted.
- * @param {!boolean} logscale Weather or not to use a logscale.
+ * @param {!boolean} logscale Whether or not to use a logscale.
  */
 handler.prototype.onLineEvaluated = function(points, axis, logscale) {
 };
