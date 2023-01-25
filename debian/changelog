@@ -2,9 +2,9 @@ dygraphs (2.2.0-1) unstable; urgency=medium
 
   * New upstream release
     - see /usr/share/doc/libjs-dygraphs/site/versions.html
-  * Update lintian overrides, Policy
+  * Update lintian overrides, Policy (ceteris paribus)
 
- -- Thorsten Glaser <tg@mirbsd.de>  Wed, 25 Jan 2023 15:19:56 +0100
+ -- Thorsten Glaser <tg@mirbsd.de>  Wed, 25 Jan 2023 15:24:48 +0100
 
 dygraphs (2.1.2-1) unstable; urgency=low
 

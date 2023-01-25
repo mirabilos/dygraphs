@@ -20,9 +20,6 @@ dygraphs source: cute-field
 # no, thanks
 dygraphs source: no-dep5-copyright
 
-# switched from native to nōn-native
-dygraphs source: odd-historical-debian-changelog-version 2.1.1 *
-
 # these are not published by GitHub
 dygraphs source: debian-watch-does-not-check-openpgp-signature
 
