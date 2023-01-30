@@ -1,3 +1,9 @@
+dygraphs (2.2.0-2) unstable; urgency=medium
+
+  * Version node-browser-pack B-D for reproducible builds
+
+ -- Thorsten Glaser <tg@mirbsd.de>  Sat, 28 Jan 2023 20:09:10 +0100
+
 dygraphs (2.2.0-1) unstable; urgency=medium
 
   * New upstream release
