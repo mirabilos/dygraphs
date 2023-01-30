@@ -1,3 +1,9 @@
+dygraphs (2.2.0-4) unstable; urgency=medium
+
+  * jq is now a Build-Depends
+
+ -- Thorsten Glaser <tg@mirbsd.de>  Tue, 31 Jan 2023 00:55:07 +0100
+
 dygraphs (2.2.0-3) unstable; urgency=medium
 
   * Fix sourcemap paths for browser-pack/core-js manually (same issue)
