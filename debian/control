@@ -35,7 +35,7 @@ Description: fast and flexible JavaScript charting library
  The dygraphs library produces interactive, zoomable charts of
  time series purely client-side. Features include:
   - Plots time series without using an external server or Flash
-  - Supports error bands around data series
+  - Supports high/low bands (confidence intervals) around data series
   - Interactive pan and zoom
   - Displays values on mouseover
   - Adjustable averaging period
