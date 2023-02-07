@@ -7,7 +7,7 @@ Gallery.register(
     title: 'Independent Series',
     setup: function(parent) {
       parent.innerHTML = [
-    "<p>By using the <i>connectSeparated</i> attribute, it's possible to display a chart of several time series with completely independent x-values.</p> ",
+    "<p>By using the <i>connectSeparated</i> attribute, it’s possible to display a chart of several time series with completely independent x-values.</p> ",
     "",
     "<p>The trick is to specify values for the series at the union of the x-values of all series. For one series' x values, specify <code>null</code> for each of the other series.</p> ",
     "",
@@ -111,7 +111,7 @@ Gallery.register(
           "2,2,\n" +
           "3,,5\n" +
           "4,4,\n" +
-          "6,Nan,\n" +
+          "6,NaN,\n" +
           "8,8,\n" +
           "10,10,";
 

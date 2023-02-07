@@ -141,3 +141,13 @@ pre.sitedata {
   color: darkgray;
   font-weight: normal;
 }
+.moveup {
+  /* match margin-bottom on p/ul in bootstrap */
+  margin-top: -10px;
+}
+.versions ul {
+  padding-left: 1.2em;
+}
+.versions td.notes h4:first-child {
+  margin-top: 0;
+}

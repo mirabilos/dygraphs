@@ -14,21 +14,29 @@ import sys
 debug_tests = []  # [ 'tests/zoom.html' ]
 
 # Pull options reference JSON out of dygraph.js
-js = ''
+js = []
 in_json = False
+numjson = 0
 with open('src/dygraph-options-reference.js', 'rt',
           encoding='UTF-8', errors='strict', newline=None) as infile:
   for line in infile:
     if '<JSON>' in line:
       in_json = True
+      js.append('')
     elif '</JSON>' in line:
       in_json = False
+      numjson += 1
     elif in_json:
-      js += line
+      js[numjson] += line
 
 # TODO(danvk): better errors here.
-assert js
-docs = json.loads(js)
+assert in_json == False
+assert len(js) == 2
+assert numjson == 2
+assert js[0]
+assert js[1]
+docs = json.loads(js[0])
+cats = json.loads(js[1])
 
 # Go through the tests and find uses of each option.
 for opt in docs:
@@ -113,7 +121,13 @@ for _, opt in docs.items():
     if label not in labels:
       labels.append(label)
 
-print("""<!--#set var="pagetitle" value="options reference" -->
+for label in labels:
+  assert label in cats, "unknown label: " + label
+for label in cats:
+  assert label in labels, "unused label: " + label
+
+print("""
+<!--#set var="pagetitle" value="options reference" -->
 <!--#include virtual="header.html" -->
 
 <!--
@@ -131,7 +145,7 @@ print("""<!--#set var="pagetitle" value="options reference" -->
 """.strip())
 for label in sorted(labels):
   print('  <li><a href="#%s">%s</a>' % (encode_anchor(label), label))
-print('</ul></div></div>\n')
+print('</ul></div></div>')
 
 print("""
 <div id='content' class='col-lg-9'>
@@ -187,11 +201,13 @@ def gallery_fmt(f):
   if gallery_files[f]:
     res = '<a href="%s">%s</a>' % (urlify_gallery(f), gallery_name(f))
   else:
-    res = '<font color="#9999FF" title="inactive">%s</a>' % gallery_name(f)
+    res = '<font color="#9999FF" title="inactive">%s</font>' % gallery_name(f)
   return res
 
 for label in sorted(labels):
-  print('<a name="%s"></a><h3>%s</h3>\n' % (encode_anchor(label), label))
+  print('<a name="%s"></a><h3>%s</h3>' % (encode_anchor(label), label))
+  if cats[label]:
+    print('<p>%s</p>' % cats[label])
 
   for opt_name in sorted(docs.keys()):
     opt = docs[opt_name]
@@ -210,6 +226,12 @@ for label in sorted(labels):
 
     if 'parameters' in opt:
       parameters = opt['parameters']
+      type_want = 'function(%s)' % ', '.join(p[0] for p in parameters)
+      if opt['type'] == type_want:
+        pass
+      else:
+        assert opt['type'].startswith(type_want + ' → '), \
+         "%s type does not match %s" % (opt_name, type_want)
       parameters_html = '\n'.join("<tr><th>%s:</th><td>%s</td></tr>" % (p[0], p[1]) for p in parameters)
       parameters_html = "\n  </p><div class='parameters'><table>\n%s\n  </table></div><p>" % (parameters_html);
     else:
@@ -232,7 +254,7 @@ for label in sorted(labels):
   <tr><th>Gallery Samples:</th><td>%(gallery_html)s</td></tr>
   <tr><th>Other Examples:</th><td>%(examples_html)s</td></tr>
   </table></div>
-  """ % { 'name': opt_name,
+  """.rstrip() % { 'name': opt_name,
           'namenc': encode_anchor(opt_name),
           'type': opt['type'],
           'parameters': parameters_html,
