@@ -94,6 +94,16 @@ var Dygraph = function(div, data, opts) {
 Dygraph.NAME = "Dygraph";
 Dygraph.VERSION = "2.2.1-alpha.0";
 
+// internal autoloader workaround
+Dygraph._req_ = null; // set by xfrmmodmap-dy.js
+var addtorequire = {};
+Dygraph._required = function _required(what, towhat) {
+  addtorequire[what] = towhat;
+};
+Dygraph._require = function require(what) {
+  return (what in addtorequire ? addtorequire[what] : Dygraph._req_(what));
+};
+
 // Various default values
 Dygraph.DEFAULT_ROLL_PERIOD = 1;
 Dygraph.DEFAULT_WIDTH = 480;
@@ -1103,7 +1113,9 @@ Dygraph.prototype.createRollInterface_ = function() {
   roller.value = this.rollPeriod_;
   utils.update(roller.style, textAttr);
 
-  roller.onchange = () => this.adjustRoll(roller.value);
+  roller.onchange = function onchange() {
+    return this.adjustRoll(roller.value);
+  }.bind(this);
 };
 
 /**
@@ -1318,11 +1330,11 @@ Dygraph.prototype.doZoomXDates_ = function(minDate, maxDate) {
   var old_window = this.xAxisRange();
   var new_window = [minDate, maxDate];
   const zoomCallback = this.getFunctionOption('zoomCallback');
-  this.doAnimatedZoom(old_window, new_window, null, null, () => {
+  this.doAnimatedZoom(old_window, new_window, null, null, function animatedZoomCallback() {
     if (zoomCallback) {
       zoomCallback.call(this, minDate, maxDate, this.yAxisRanges());
     }
-  });
+  }.bind(this));
 };
 
 /**
@@ -1348,12 +1360,12 @@ Dygraph.prototype.doZoomY_ = function(lowY, highY) {
   }
 
   const zoomCallback = this.getFunctionOption('zoomCallback');
-  this.doAnimatedZoom(null, null, oldValueRanges, newValueRanges, () => {
+  this.doAnimatedZoom(null, null, oldValueRanges, newValueRanges, function animatedZoomCallback() {
     if (zoomCallback) {
       const [minX, maxX] = this.xAxisRange();
       zoomCallback.call(this, minX, maxX, this.yAxisRanges());
     }
-  });
+  }.bind(this));
 };
 
 /**
@@ -1413,7 +1425,7 @@ Dygraph.prototype.resetZoom = function() {
   }
 
   this.doAnimatedZoom(oldWindow, newWindow, oldValueRanges, newValueRanges,
-      () => {
+      function animatedZoomCallback() {
         this.dateWindow_ = null;
         this.axes_.forEach(axis => {
           if (axis.valueRange) delete axis.valueRange;
@@ -1421,7 +1433,7 @@ Dygraph.prototype.resetZoom = function() {
         if (zoomCallback) {
           zoomCallback.call(this, minDate, maxDate, this.yAxisRanges());
         }
-      });
+      }.bind(this));
 };
 
 /**
@@ -1457,7 +1469,7 @@ Dygraph.prototype.doAnimatedZoom = function(oldXRange, newXRange, oldYRanges, ne
     }
   }
 
-  utils.repeatAndCleanup(step => {
+  utils.repeatAndCleanup(function cleanupStep(step) {
     if (valueRanges.length) {
       for (var i = 0; i < this.axes_.length; i++) {
         var w = valueRanges[step][i];
@@ -1468,7 +1480,7 @@ Dygraph.prototype.doAnimatedZoom = function(oldXRange, newXRange, oldYRanges, ne
       this.dateWindow_ = windows[step];
     }
     this.drawGraph_();
-  }, steps, Dygraph.ANIMATION_DURATION / steps, callback);
+  }.bind(this), steps, Dygraph.ANIMATION_DURATION / steps, callback);
 };
 
 /**
@@ -2789,7 +2801,7 @@ Dygraph.prototype.parseCSV_ = function(data) {
           } else {
             console.warn('When using customBars, values must be either blank ' +
                          'or "low;center;high" tuples (got "' + val +
-                         '" on line ' + (1+i));
+                         '" on line ' + (1+i) + ')');
           }
         }
       }
@@ -3220,7 +3232,7 @@ Dygraph.copyUserAttrs_ = function(attrs) {
 /**
  * Resizes the dygraph. If no parameters are specified, resizes to fill the
  * containing div (which has presumably changed size since the dygraph was
- * instantiated. If the width/height are specified, the div will be resized.
+ * instantiated). If the width/height are specified, the div will be resized.
  *
  * This is far more efficient than destroying and re-instantiating a
  * Dygraph, since it doesn't have to reparse the underlying data.

@@ -76,21 +76,23 @@ cp -r es5 src
 browserify \
     -v \
     --debug \
-    --standalone Dygraph \
+    -p ../scripts/xfrmmodmap-dy.js \
+    --full-paths \
     LICENCE.js \
     src/dygraph.js \
     >dygraph.tmp.js
 browserify \
     -v \
     --debug \
-    LICENCE.js \
+    -p ../scripts/xfrmmodmap-t.js \
+    --full-paths \
     tests5/tests/*.js \
     >tests.tmp.js
 rm -rf src
 ../scripts/smap-out.py dygraph.tmp.js dygraph.js dygraph.js.map
 ../scripts/smap-out.py tests.tmp.js tests.tmp2.js tests.tmp.map
-jq 'del(.sourcesContent)' <tests.tmp.map | perl -MCwd -pe \
-    's!"((?:\.\./)+)!Cwd::realpath($1) eq "/" ? "\"/" : $&!e;' \
+jq . <tests.tmp.map | perl -MCwd -pe \
+    's!^ *"((?:\.\./)+)!Cwd::realpath($1) eq "/" ? "\"/" : $&!e;' \
     >tests.tmp2.map
 ../scripts/smap-in.py tests.tmp2.js tests.tmp2.map tests.js #--nonl
 
@@ -100,7 +102,8 @@ cp -r es5 src
 browserify \
     -v \
     --debug \
-    --standalone Dygraph \
+    -p ../scripts/xfrmmodmap-dy.js \
+    --full-paths \
     src/dygraph.js \
     >dygraph.min.tmp.js
 rm -rf src
