@@ -16,6 +16,7 @@ shellexport=$(1)=$(call shellescape,${$(1)})
 
 # mostly ../.gitignore minus debian/copyright
 CLEANFILES+=	*.log
+CLEANFILES+=	__pycache__
 CLEANFILES+=	_site
 CLEANFILES+=	coverage
 CLEANFILES+=	dist
@@ -23,6 +24,8 @@ CLEANFILES+=	disttmp
 CLEANFILES+=	docroot
 CLEANFILES+=	docs/download.html
 CLEANFILES+=	docs/options.html
+CLEANFILES+=	docs/versions.html
+CLEANFILES+=	dygraphs-2.*.tgz
 CLEANFILES+=	env
 CLEANFILES+=	jsdoc
 CLEANFILES+=	jsdoc.tmp
