@@ -1,3 +1,12 @@
+dygraphs (2.2.0-56-g21212068-1) UNRELEASED; urgency=medium
+
+  * New upstream prerelease
+    - stop installing tests.js, no longer necessary
+    - do install new upstream CHANGES file
+    - use official origtgz, not GitHub-provided, not-stable tarballs
+
+ -- Thorsten Glaser <tg@mirbsd.de>  Thu, 09 Feb 2023 17:08:28 +0100
+
 dygraphs (2.2.0-4) unstable; urgency=medium
 
   * jq is now a Build-Depends
