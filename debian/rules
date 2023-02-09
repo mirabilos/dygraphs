@@ -42,6 +42,8 @@ execute_before_dh_clean:
 override_dh_auto_build:
 	scripts/build.sh
 	(cd site && exec mksh ../scripts/mkdiridx.sh --ah '<a href="../">libjs-dygraphs</a> manual integration tests' ./tests)
+	# for testing reproducibility between NPM and Debian builds
+	@sha256sum dist/tests.js
 
 execute_after_dh_installdocs:
 	# replaced with symbolic links
