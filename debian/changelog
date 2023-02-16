@@ -1,11 +1,11 @@
-dygraphs (2.2.0-56-g21212068-1) UNRELEASED; urgency=medium
+dygraphs (2.2.1-1) unstable; urgency=medium
 
-  * New upstream prerelease
+  * New upstream targeted bugfix release
     - stop installing tests.js, no longer necessary
     - do install new upstream CHANGES file
     - use official origtgz, not GitHub-provided, not-stable tarballs
 
- -- Thorsten Glaser <tg@mirbsd.de>  Thu, 09 Feb 2023 17:08:28 +0100
+ -- Thorsten Glaser <tg@mirbsd.de>  Fri, 17 Feb 2023 00:43:05 +0100
 
 dygraphs (2.2.0-4) unstable; urgency=medium
 
