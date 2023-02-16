@@ -16,9 +16,9 @@
     <h4>Window coordinates (in dates and values):</h4>
     <div id="xdimensions"></div> <div id="ydimensions"></div>
     <div style="float: right">
-        <p>Zoomed: <span id="zoomed">False</span><p/>
-        <p>Zoomed X: <span id="zoomedX">False</span><p/>
-        <p>Zoomed Y: <span id="zoomedY">False</span><p/>
+        <p>Zoomed: <span id="zoomed">False</span></p>
+        <p>Zoomed X: <span id="zoomedX">False</span></p>
+        <p>Zoomed Y: <span id="zoomedY">False</span></p>
     </div>
     <div id="div_g" style="width:600px; height:300px;"></div>
 
@@ -43,6 +43,7 @@
       </p>
 
     <script type="text/javascript"><!--//--><![CDATA[//><!--
+    Dygraph.onDOMready(function onDOMready() {
       g = new Dygraph(
             document.getElementById("div_g"),
             NoisyData, {
@@ -83,30 +84,31 @@
         elem.innerHTML = "valueRange : [" + ranges + "]";
       }
 
-      function zoomGraphX(minDate, maxDate) {
+      zoomGraphX = function zoomGraphX(minDate, maxDate) {
         g.updateOptions({
           dateWindow: [minDate, maxDate]
         });
         showXDimensions(minDate, maxDate);
       }
 
-      function zoomGraphY(minValue, maxValue) {
+      zoomGraphY = function zoomGraphY(minValue, maxValue) {
         g.updateOptions({
           valueRange: [minValue, maxValue]
         });
         showYDimensions(g.yAxisRanges());
       }
 
-      function unzoomGraph() {
+      unzoomGraph = function unzoomGraph() {
         g.updateOptions({
           dateWindow: null,
           valueRange: null
         });
       }
 
-      function panEdgeFraction(value) {
+      panEdgeFraction = function panEdgeFraction(value) {
         g.updateOptions({ panEdgeFraction : value });
       }
+    });
     //--><!]]></script>
   </body>
 </html>

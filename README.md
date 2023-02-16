@@ -6,7 +6,7 @@ The dygraphs JavaScript library produces interactive, zoomable charts of time se
 
 Learn more about it at [dygraphs.com](http://www.dygraphs.com).
 
-Get help with dygraphs by browsing the  on [Stack Overflow][] (preferred) and [Google Groups][].
+Get help with dygraphs on [Stack Overflow][] (preferred) and [Google Groups][].
 
 ## Features
 * Plots time series without using an external server or Flash
@@ -27,7 +27,8 @@ Get help with dygraphs by browsing the  on [Stack Overflow][] (preferred) and [G
 <body>
 <div id="graphdiv"></div>
 <script type="text/javascript"><!--//--><![CDATA[//><!--
-  g = new Dygraph(
+  Dygraph.onDOMready(function onDOMready() {  // or jQuery $() etc.
+    g = new Dygraph(
         document.getElementById("graphdiv"),  // containing div
         "Date,Temperature\n" +                // the data series
         "2008-05-07,75\n" +
@@ -35,6 +36,7 @@ Get help with dygraphs by browsing the  on [Stack Overflow][] (preferred) and [G
         "2008-05-09,80\n",
         { }                                   // the options
       );
+  });
 //--><!]]></script>
 </body>
 </html>

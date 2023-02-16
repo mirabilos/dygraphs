@@ -17,9 +17,11 @@
   Usage:
    <div id="graphdiv" style="width:800px; height:500px;"></div>
    <script type="text/javascript"><!--//--><![CDATA[//><!--
+   $(function onDOMready() {
      new Dygraph(document.getElementById("graphdiv"),
                  "datafile.csv",  // CSV file with headers
                  { }); // options
+   });
    //--><!]]></script>
 
  The CSV file is of the form
@@ -93,16 +95,16 @@ var Dygraph = function Dygraph(div, data, opts) {
 };
 
 Dygraph.NAME = "Dygraph";
-Dygraph.VERSION = "2.2.1-alpha.0";
+Dygraph.VERSION = "2.2.1";
 
 // internal autoloader workaround
-Dygraph._req_ = null; // set by xfrmmodmap-dy.js
-var addtorequire = {};
-Dygraph._required = function _required(what, towhat) {
-  addtorequire[what] = towhat;
-};
+var _addrequire = {};
 Dygraph._require = function require(what) {
-  return (what in addtorequire ? addtorequire[what] : Dygraph._req_(what));
+  return (what in _addrequire ? _addrequire[what] : Dygraph._require._b(what));
+};
+Dygraph._require._b = null; // set by xfrmmodmap-dy.js
+Dygraph._require.add = function add(what, towhat) {
+  _addrequire[what] = towhat;
 };
 
 // Various default values
@@ -3548,5 +3550,7 @@ Dygraph.dateTicker = DygraphTickers.dateTicker;
 Dygraph.Granularity = DygraphTickers.Granularity;
 Dygraph.getDateAxis = DygraphTickers.getDateAxis;
 Dygraph.floatFormat = utils.floatFormat;
+
+utils.setupDOMready_(Dygraph);
 
 export default Dygraph;

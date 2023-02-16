@@ -31,6 +31,7 @@
     <script type="text/javascript" src="synchronize.js"></script>
     <script type="text/javascript" src="range-selector.js"></script>
     <script type="text/javascript" src="resize.js"></script>
+    <script type="text/javascript" src="resizable.js"></script>
     <script type="text/javascript" src="stock.js"></script>
     <script type="text/javascript" src="styled-chart-labels.js"></script>
     <script type="text/javascript" src="temperature-sf-ny.js"></script>
@@ -55,14 +56,15 @@
   <body>
     <table>
       <tr>
-        <td><h2><a href="../index.html">Dygraphs</a> Gallery</h2></td>
+        <td><h2 style="white-space:nowrap;"><a
+         href="../index.html">Dygraphs</a> Gallery</h2></td>
         <td></td>
         <td id="demotitle"></td>
       </tr>
       <tr>
         <td id='lhs'>
         <div id="toc"></div>
-        <hr/>
+        <hr />
         <a href="../index.html">Back to Dygraphs.</a>
         </td>
         <td id='gap'></td>
@@ -71,6 +73,8 @@
         </td>
       </tr>
     </table>
-  <script type="text/javascript">Gallery.start()</script>
+  <script type="text/javascript"><!--//--><![CDATA[//><!--
+    $(Gallery.start);
+  //--><!]]></script>
   </body>
 </html>

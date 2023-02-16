@@ -10,7 +10,7 @@
   </head>
   <body>
     <h2>Demo</h2>
-    <font size=-1>(Mouse over to highlight individual values. Click and drag to zoom. Double-click to zoom out.)</font><br/>
+    <font size=-1>(Mouse over to highlight individual values. Click and drag to zoom. Double-click to zoom out.)</font><br />
     <table><tr><td>
     <div id="demodiv"></div>
     </td><td valign=top>
@@ -18,6 +18,7 @@
     </td>
     </tr></table>
     <script type="text/javascript"><!--//--><![CDATA[//><!--
+    Dygraph.onDOMready(function onDOMready() {
       g = new Dygraph(
               document.getElementById("demodiv"),
               "Date,Value\n" +
@@ -37,6 +38,7 @@
                 height: 320
               }
           );
+    });
     //--><!]]></script>
   </body>
 </html>

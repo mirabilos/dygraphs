@@ -195,6 +195,8 @@ function attachZoomHandlers(gs, syncOpts, prevCallbacks) {
         var opts = {
           dateWindow: me.xAxisRange()
         };
+        if (!me.isZoomed('x'))
+          opts.dateWindow = null;
         if (syncOpts.range)
           opts.valueRange = me.yAxisRange();
 
@@ -267,5 +269,5 @@ function attachSelectionHandlers(gs, prevCallbacks) {
 Dygraph.synchronize = synchronize;
 
 /* closure and loader wrapper */
-Dygraph._required('dygraphs/src/extras/synchronizer.js', /* exports */ {});
+Dygraph._require.add('dygraphs/src/extras/synchronizer.js', /* exports */ {});
 })();

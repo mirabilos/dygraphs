@@ -18,7 +18,7 @@
     </tr></table>
     <p>
         The following chart should be the same as above. Here we use the
-        labelsDiv id instead of the actual labelsDiv element.<br/>This is
+        labelsDiv id instead of the actual labelsDiv element.<br />This is
         useful when the labelsDiv element has not been attached to the
         DOM when the chart/options is created:
     </p>
@@ -40,6 +40,7 @@
     </tr></table>
 
     <script type="text/javascript"><!--//--><![CDATA[//><!--
+    Dygraph.onDOMready(function onDOMready() {
       g2 = new Dygraph(document.getElementById("graphdiv2"),
                        data_nolabel,
                        {
@@ -59,6 +60,7 @@
                          labelsDiv: "labels3",
                          labelsShowZeroValues: false
                        });
+    });
     //--><!]]></script>
   </body>
 </html>

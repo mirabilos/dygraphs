@@ -38,6 +38,7 @@
         return r;
       }
 
+    Dygraph.onDOMready(function onDOMready() {
       g = new Dygraph(
               document.getElementById("demodiv"),
               Data,
@@ -46,14 +47,16 @@
                 legend: 'always'
               }
           );
+    });
     //--><!]]></script>
 
-    <br/>
+    <br />
     <div class="container">
       <div id="chart2"></div>
     </div>
 
     <script type="text/javascript"><!--//--><![CDATA[//><!--
+    Dygraph.onDOMready(function onDOMready() {
       g = new Dygraph(
               document.getElementById("chart2"),
               Data,
@@ -62,6 +65,7 @@
                 legend: 'always'
               }
           );
+    });
     //--><!]]></script>
   </body>
 </html>

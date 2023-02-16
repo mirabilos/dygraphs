@@ -23,6 +23,7 @@
     <div style="position:absolute; left:700px; top: 200px;" id="list"></div>
 
     <script type="text/javascript"><!--//--><![CDATA[//><!--
+    Dygraph.onDOMready(function onDOMready() {
       var eventDiv = document.getElementById("events");
       function nameAnnotation(ann) {
         return "(" + ann.series + ", " + ann.x + ")";
@@ -65,7 +66,7 @@
                     var name = nameAnnotation(ann[i]);
                     html += "<span id='" + name + "'>"
                     html += name + ": " + (ann[i].shortText || '(icon)')
-                    html += " -> " + ann[i].text + "</span><br/>";
+                    html += " -> " + ann[i].text + "</span><br />";
                   }
                   document.getElementById("list").innerHTML = html;
                 }
@@ -94,7 +95,7 @@
         text: 'Another one',
         cssClass: 'annotation',
         clickHandler: function() {
-          document.getElementById("events").innerHTML += "special handler<br/>";
+          document.getElementById("events").innerHTML += "special handler<br />";
         }
       } );
       annotations.push( {
@@ -108,7 +109,7 @@
         g.setAnnotations(annotations);
       }
 
-      function add() {
+      add = function add() {
         var x = last_ann + 2;
         var annnotations = g.annotations();
         annotations.push( {
@@ -122,7 +123,7 @@
         g.setAnnotations(annotations);
       }
 
-      function bottom(el) {
+      bottom = function bottom(el) {
         var to_bottom = true;
         if (el.value != 'Shove to bottom') to_bottom = false;
 
@@ -143,10 +144,10 @@
       var num = 0;
       g.updateOptions( {
         annotationClickHandler: function(ann, point, dg, event) {
-          eventDiv.innerHTML += "click: " + nameAnnotation(ann) + "<br/>";
+          eventDiv.innerHTML += "click: " + nameAnnotation(ann) + "<br />";
         },
         annotationDblClickHandler: function(ann, point, dg, event) {
-          eventDiv.innerHTML += "dblclick: " + nameAnnotation(ann) + "<br/>";
+          eventDiv.innerHTML += "dblclick: " + nameAnnotation(ann) + "<br />";
         },
         annotationMouseOverHandler: function(ann, point, dg, event) {
           document.getElementById(nameAnnotation(ann)).style.fontWeight = 'bold';
@@ -176,6 +177,7 @@
           num++;
         }
       });
+    });
     //--><!]]></script>
   </body>
 </html>
