@@ -4,8 +4,9 @@ dygraphs (2.2.1-1) unstable; urgency=medium
     - stop installing tests.js, no longer necessary
     - do install new upstream CHANGES file
     - use official origtgz, not GitHub-provided, not-stable tarballs
+  * Update overrides for lintian
 
- -- Thorsten Glaser <tg@mirbsd.de>  Fri, 17 Feb 2023 00:43:05 +0100
+ -- Thorsten Glaser <tg@mirbsd.de>  Fri, 17 Feb 2023 00:46:50 +0100
 
 dygraphs (2.2.0-4) unstable; urgency=medium
 
