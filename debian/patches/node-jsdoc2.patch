@@ -2,7 +2,18 @@ Index: dygraphs/scripts/generate-jsdoc.sh
 ===================================================================
 --- dygraphs.orig/scripts/generate-jsdoc.sh
 +++ dygraphs/scripts/generate-jsdoc.sh
-@@ -53,8 +53,7 @@ srcfiles+=\ src/plugins/grid.js
+@@ -12,10 +12,6 @@ test -n "$v" || {
+ 
+ rm -rf jsdoc jsdoc.tmp
+ mkdir jsdoc.tmp
+-t=$PWD/jsdoc.tmp
+-(cd /usr/share/jsdoc-toolkit/templates/jsdoc && pax -rw . "$t/")
+-find jsdoc.tmp -type f -print0 | xargs -0r perl -pi -e \
+-  "s! on [{][+]new Date[(][)][+][}]! for dygraph $v!g"
+ 
+ echo Generating JSDoc...
+ srcfiles=src/dygraph.js
+@@ -53,8 +49,7 @@ srcfiles+=\ src/plugins/grid.js
  #srcfiles+=\ src/extras/super-annotations.js
  #srcfiles+=\ src/extras/synchronizer.js
  #srcfiles+=\ src/extras/unzoom.js
