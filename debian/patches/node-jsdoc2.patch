@@ -13,7 +13,7 @@ Index: dygraphs/scripts/generate-jsdoc.sh
  
  echo Generating JSDoc...
  srcfiles=src/dygraph.js
-@@ -53,8 +49,7 @@ srcfiles+=\ src/plugins/grid.js
+@@ -53,17 +49,11 @@ srcfiles+=\ src/plugins/grid.js
  #srcfiles+=\ src/extras/super-annotations.js
  #srcfiles+=\ src/extras/synchronizer.js
  #srcfiles+=\ src/extras/unzoom.js
@@ -23,3 +23,12 @@ Index: dygraphs/scripts/generate-jsdoc.sh
    -d=jsdoc \
    $srcfiles \
  2>&1 | tee jsdoc.tmp/.errs
+ 
+-ed -s jsdoc.tmp/.errs <<-\EOF
+-	1g/java .*jsrun.jar/d
+-	w
+-	q
+-EOF
+ if test -s jsdoc.tmp/.errs; then errs=true; else errs=false; fi
+ rm -rf jsdoc.tmp
+ 
