@@ -1,0 +1,14 @@
+Index: dygraphs/scripts/generate-jsdoc.sh
+===================================================================
+--- dygraphs.orig/scripts/generate-jsdoc.sh
++++ dygraphs/scripts/generate-jsdoc.sh
+@@ -53,8 +53,7 @@ srcfiles+=\ src/plugins/grid.js
+ #srcfiles+=\ src/extras/super-annotations.js
+ #srcfiles+=\ src/extras/synchronizer.js
+ #srcfiles+=\ src/extras/unzoom.js
+-jsdoc \
+-  -t="$t" \
++jsdoc2 \
+   -d=jsdoc \
+   $srcfiles \
+ 2>&1 | tee jsdoc.tmp/.errs

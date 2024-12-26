@@ -1,3 +1,10 @@
+dygraphs (2.2.1-1.1) unstable; urgency=medium
+
+  * NMU: replacing jsdoc-toolkit build-dependency by node-jsdoc2, and patched
+    scripts/generate-jsdoc.sh accordingly. Closes: #1074595
+
+ -- Georges Khaznadar <georgesk@debian.org>  Thu, 26 Dec 2024 14:37:41 +0100
+
 dygraphs (2.2.1-1) unstable; urgency=medium
 
   * New upstream targeted bugfix release
