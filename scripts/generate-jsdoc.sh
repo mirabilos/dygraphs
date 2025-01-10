@@ -13,9 +13,10 @@ test -n "$v" || {
 rm -rf jsdoc jsdoc.tmp
 mkdir jsdoc.tmp
 t=$PWD/jsdoc.tmp
-(cd /usr/share/jsdoc-toolkit/templates/jsdoc && pax -rw . "$t/")
+(cd /usr/share/nodejs/jsdoc2/templates/jsdoc && pax -rw . "$t/")
 find jsdoc.tmp -type f -print0 | xargs -0r perl -pi -e \
-  "s! on [{][+]new Date[(][)][+][}]! for dygraph $v!g"
+  "s/\r+$//;" -e \
+  "s! on [{][+]new Date[(][)][+][}]! for dygraph $v!g;"
 
 echo Generating JSDoc...
 srcfiles=src/dygraph.js
@@ -53,17 +54,12 @@ srcfiles+=\ src/plugins/grid.js
 #srcfiles+=\ src/extras/super-annotations.js
 #srcfiles+=\ src/extras/synchronizer.js
 #srcfiles+=\ src/extras/unzoom.js
-jsdoc \
+jsdoc2 \
   -t="$t" \
   -d=jsdoc \
   $srcfiles \
 2>&1 | tee jsdoc.tmp/.errs
 
-ed -s jsdoc.tmp/.errs <<-\EOF
-	1g/java .*jsrun.jar/d
-	w
-	q
-EOF
 if test -s jsdoc.tmp/.errs; then errs=true; else errs=false; fi
 rm -rf jsdoc.tmp
 

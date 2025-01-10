@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * @license
  * Copyright 2006 Dan Vanderkam (danvdk@gmail.com)
@@ -73,8 +75,6 @@ import RangeSelectorPlugin from './plugins/range-selector';
 
 import GVizChart from './dygraph-gviz';
 
-"use strict";
-
 /**
  * @class Creates an interactive, zoomable chart.
  * @name Dygraph
@@ -95,7 +95,7 @@ var Dygraph = function Dygraph(div, data, opts) {
 };
 
 Dygraph.NAME = "Dygraph";
-Dygraph.VERSION = "2.2.1";
+Dygraph.VERSION = "2.2.2-alpha.0";
 
 // internal autoloader workaround
 var _addrequire = {};
@@ -3507,6 +3507,7 @@ Dygraph.PLUGINS = [
 // There are many symbols which have historically been available through the
 // Dygraph class. These are exported here for backwards compatibility.
 Dygraph.GVizChart = GVizChart;
+Dygraph.DOTTED_LINE = utils.DOTTED_LINE;
 Dygraph.DASHED_LINE = utils.DASHED_LINE;
 Dygraph.DOT_DASH_LINE = utils.DOT_DASH_LINE;
 Dygraph.dateAxisLabelFormatter = utils.dateAxisLabelFormatter;
