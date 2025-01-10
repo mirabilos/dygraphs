@@ -19,7 +19,7 @@ Build-Depends: debhelper-compat (= 13),
  pax,
  python3,
  uglifyjs,
-Standards-Version: 4.6.2
+Standards-Version: 4.7.0
 Rules-Requires-Root: no
 VCS-git: https://github.com/mirabilos/dygraphs
 VCS-Browser: https://github.com/mirabilos/dygraphs
