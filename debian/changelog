@@ -1,3 +1,9 @@
+dygraphs (2.2.1-3) unstable; urgency=low
+
+  * Remove place where libjs-bootstrap was still used during build
+
+ -- Thorsten Glaser <tg@mirbsd.de>  Sat, 11 Jan 2025 07:06:57 +0100
+
 dygraphs (2.2.1-2) unstable; urgency=low
 
   * Update to upstream git master for bugfixes
