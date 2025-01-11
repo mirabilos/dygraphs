@@ -1,1 +1,2 @@
+extend-diff-ignore = "^docs/\.jslibs/.*\.txt$"
 single-debian-patch
