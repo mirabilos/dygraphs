@@ -8,7 +8,8 @@ test -n "$v" || {
 }
 
 if [[ -d debian ]]; then
-  dv=$v
+  dv=$(dpkg-parsechangelog -S Version)
+  dv="$dv ($v)"
 else
   dv=
 fi
