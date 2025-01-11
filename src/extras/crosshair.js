@@ -33,6 +33,15 @@ Dygraph.Plugins.Crosshair = (function _extras_crosshair_closure() {
     this.strokeStyle_ = opt_options.strokeStyle || "rgba(0, 0, 0, 0.3)";
   };
 
+  crosshair.prototype.updateCanvasSize = function updateCanvasSize(width, height) {
+    if (width === this.canvas_.width && height === this.canvas_.height)
+      return;
+    this.canvas_.width = width;
+    this.canvas_.height = height;
+    this.canvas_.style.width = width + 'px';    // for IE
+    this.canvas_.style.height = height + 'px';  // for IE
+  };
+
   crosshair.prototype.toString = function toString() {
     return "Crosshair Plugin";
   };
@@ -42,6 +51,7 @@ Dygraph.Plugins.Crosshair = (function _extras_crosshair_closure() {
    * @return {object.<string, function(ev)>} Mapping of event names to callbacks.
    */
   crosshair.prototype.activate = function activate(g) {
+    this.updateCanvasSize(g.width_, g.height_);
     g.graphDiv.appendChild(this.canvas_);
 
     return {
@@ -57,28 +67,38 @@ Dygraph.Plugins.Crosshair = (function _extras_crosshair_closure() {
 
     var width = e.dygraph.width_;
     var height = e.dygraph.height_;
-    this.canvas_.width = width;
-    this.canvas_.height = height;
-    this.canvas_.style.width = width + "px";    // for IE
-    this.canvas_.style.height = height + "px";  // for IE
+    this.updateCanvasSize(width, height);
 
     var ctx = this.canvas_.getContext("2d");
     ctx.clearRect(0, 0, width, height);
     ctx.strokeStyle = this.strokeStyle_;
     ctx.beginPath();
 
-    var canvasx = Math.floor(e.dygraph.selPoints_[0].canvasx) + 0.5; // crisper rendering
+    if (this.direction_ === "both" || this.direction_ === "vertical") {
+      if (e.dygraph.selPoints_.length !== 0) {
+        var p = e.dygraph.selPoints_[0];
+        if (p.x >= 0 && p.x <= 1) {
+          var canvasx = Math.floor(p.canvasx) + 0.5; // crisper rendering
+          if (canvasx > width)
+            canvasx = width - 0.5;
 
-    if (this.direction_ === "vertical" || this.direction_ === "both") {
-      ctx.moveTo(canvasx, 0);
-      ctx.lineTo(canvasx, height);
+          ctx.moveTo(canvasx, 0);
+          ctx.lineTo(canvasx, height);
+        }
+      }
     }
 
-    if (this.direction_ === "horizontal" || this.direction_ === "both") {
+    if (this.direction_ === "both" || this.direction_ === "horizontal") {
       for (var i = 0; i < e.dygraph.selPoints_.length; i++) {
-        var canvasy = Math.floor(e.dygraph.selPoints_[i].canvasy) + 0.5; // crisper rendering
-        ctx.moveTo(0, canvasy);
-        ctx.lineTo(width, canvasy);
+        var p = e.dygraph.selPoints_[i];
+        if (p.y >= 0 && p.y <= 1) {
+          var canvasy = Math.floor(p.canvasy) + 0.5; // crisper rendering
+          if (canvasy > height)
+            canvasy = height - 0.5;
+
+          ctx.moveTo(0, canvasy);
+          ctx.lineTo(width, canvasy);
+        }
       }
     }
 
