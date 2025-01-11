@@ -2,6 +2,10 @@
 # © 2022 mirabilos <t.glaser@tarent.de> Ⓕ MIT
 
 set -eo pipefail
+case $KSH_VERSION {
+(*MIRBSD\ KSH*) ;;
+(*) echo E: do not call me with bash or something; exit 255 ;;
+}
 mydir=$(realpath "$0/..")
 
 infile=$1
@@ -20,5 +24,5 @@ fi
 rm -f "$outfile" "$outfile.tmp.js" "$outfile.tmp.js.map"
 print -ru2 "I: converting $infile to $outfile"
 $node_js "$mydir"/txt2js.js "$infile" "$outfile.tmp.js"
-"$mydir"/smap-in.py "$outfile.tmp.js" "$outfile.tmp.js.map" "$outfile" --nonl
+python3 "$mydir"/smap-in.py "$outfile.tmp.js" "$outfile.tmp.js.map" "$outfile" --nonl
 rm -f "$outfile.tmp.js" "$outfile.tmp.js.map"
