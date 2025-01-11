@@ -43,7 +43,7 @@ execute_before_dh_clean:
 	dh $@ --buildsystem=none
 
 override_dh_auto_build:
-	scripts/build.sh
+	env IS_ACTUAL_DEBIAN_BUILD=1 scripts/build.sh
 	(cd site && exec mksh ../scripts/mkdiridx.sh --ah '<a href="../">libjs-dygraphs</a> manual integration tests' ./tests)
 
 execute_after_dh_installdocs:
