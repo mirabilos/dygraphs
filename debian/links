@@ -10,3 +10,7 @@ usr/share/javascript/bootstrap/js/bootstrap.min.js usr/share/doc/libjs-dygraphs/
 usr/share/javascript/jquery-ui/jquery-ui.min.js usr/share/doc/libjs-dygraphs/site/.jslibs/jquery-ui.min.js
 usr/share/javascript/jquery-ui/themes/base/jquery-ui.min.css usr/share/doc/libjs-dygraphs/site/.jslibs/jquery-ui.min.css
 usr/share/javascript/jquery/jquery.min.js usr/share/doc/libjs-dygraphs/site/.jslibs/jquery.min.js
+# licences thereof, same name/location upstream uses, for simplicity
+usr/share/doc/libjs-bootstrap/copyright usr/share/doc/libjs-dygraphs/site/.jslibs/bootstrap.txt
+usr/share/doc/libjs-jquery-ui/copyright usr/share/doc/libjs-dygraphs/site/.jslibs/jquery-ui.txt
+usr/share/doc/libjs-jquery/copyright usr/share/doc/libjs-dygraphs/site/.jslibs/jquery.txt
