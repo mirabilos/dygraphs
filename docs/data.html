@@ -28,7 +28,10 @@ parameter.</p>
 <p>These are all discussed below. If you're trying to debug why your input
 won't parse, <b>check the JS error console</b>. dygraphs tries to log
 informative errors explaining what's wrong with your data, and these can
-often point you in the right direction.</p>
+often point you in the right direction. For example, you may see a console
+message telling you that your data source is out of order, in which case
+you will want to sort the input correctly, so that it does not need to be
+sorted at runtime each time it’s loaded.</p>
 
 <p>There are several options which affect how your input data is
 interpreted. These are:</p>
@@ -45,7 +48,7 @@ interpreted. These are:</p>
 <p>Here's an example of what CSV data should look like:</p>
 <pre class="sitedata">
 Date,Series1,Series2
-2009/07/12,100,200  # comments are OK on data lines
+2009/07/12,100,200
 2009/07/19,150,201
 </pre>
 

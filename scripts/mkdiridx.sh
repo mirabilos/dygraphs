@@ -1,10 +1,8 @@
 #!/bin/mksh
 # From MirOS: www/mk/common,v 1.12 2021/12/11 20:10:49 tg Exp $'
 #-
-# Copyright © 2022
-#	mirabilos <t.glaser@tarent.de>
-# Copyright © 2007, 2008, 2012, 2013, 2014, 2018, 2021
-#	mirabilos <m@mirbsd.org>
+# Copyright © 2007, 2008, 2012, 2013, 2014, 2018, 2021, 2022
+#	mirabilos <m$(date +%Y)@mirbsd.de>
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation
@@ -150,6 +148,7 @@ for dir in "$@"; do
 		<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><head>
 		 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		 <meta http-equiv="Content-Style-Type" content="text/css" />
+		 <meta name="tdm-reservation" content="1" />
 		 <meta name="MSSmartTagsPreventParsing" content="TRUE" />
 		 <title>$t</title>
 		</head><body>

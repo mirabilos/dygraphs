@@ -34,9 +34,9 @@ export var LN_TEN = Math.log(LOG_SCALE);
  * @param {number} x
  * @return {number}
  */
-export var log10 = function(x) {
+export function log10(x) {
   return Math.log(x) / LN_TEN;
-};
+}
 
 /**
  * @private
@@ -45,7 +45,7 @@ export var log10 = function(x) {
  * @param {number} pct
  * @return {number}
  */
-export var logRangeFraction = function(r0, r1, pct) {
+export function logRangeFraction(r0, r1, pct) {
   // Computing the inverse of toPercentXCoord. The function was arrived at with
   // the following steps:
   //
@@ -69,7 +69,7 @@ export var logRangeFraction = function(r0, r1, pct) {
   var exponent = logr0 + (pct * (logr1 - logr0));
   var value = Math.pow(LOG_SCALE, exponent);
   return value;
-};
+}
 
 /** A dotted line stroke pattern. */
 export var DOTTED_LINE = [2, 2];
@@ -93,9 +93,19 @@ export var VERTICAL = 2;
  * @return {!CanvasRenderingContext2D}
  * @private
  */
-export var getContext = function(canvas) {
+export function getContext(canvas) {
   return /** @type{!CanvasRenderingContext2D}*/(canvas.getContext("2d"));
-};
+}
+
+/**
+ * EventListener options
+ */
+function _eventListenerOptions(type) {
+  return ((type === 'touchstart' || type === 'touchmove') ? {
+    "capture": false,
+    "passive": true
+  } : false);
+}
 
 /**
  * Add an event handler.
@@ -105,9 +115,9 @@ export var getContext = function(canvas) {
  *     on the event. The function takes one parameter: the event object.
  * @private
  */
-export var addEvent = function addEvent(elem, type, fn) {
-  elem.addEventListener(type, fn, false);
-};
+export function addEvent(elem, type, fn) {
+  elem.addEventListener(type, fn, _eventListenerOptions(type));
+}
 
 /**
  * Remove an event handler.
@@ -117,7 +127,7 @@ export var addEvent = function addEvent(elem, type, fn) {
  *     on the event. The function takes one parameter: the event object.
  */
 export function removeEvent(elem, type, fn) {
-  elem.removeEventListener(type, fn, false);
+  elem.removeEventListener(type, fn, _eventListenerOptions(type));
 }
 
 /**
@@ -492,8 +502,8 @@ export function binarySearch(val, arry, abs, low, high) {
  * @return {number} Milliseconds since epoch.
  * @private
  */
+var _dateParser_re = /-/g;
 export function dateParser(dateStr) {
-  var dateStrSlashed;
   var d;
 
   // Let the system try the format first, with one caveat:
@@ -505,25 +515,22 @@ export function dateParser(dateStr) {
   if (dateStr.search("-") == -1 ||
       dateStr.search("T") != -1 || dateStr.search("Z") != -1) {
     d = dateStrToMillis(dateStr);
-    if (d && !isNaN(d)) return d;
+    if (d != null && !isNaN(d)) return d;
   }
 
   if (dateStr.search("-") != -1) {  // e.g. '2009-7-12' or '2009-07-12'
-    dateStrSlashed = dateStr.replace("-", "/", "g");
-    while (dateStrSlashed.search("-") != -1) {
-      dateStrSlashed = dateStrSlashed.replace("-", "/");
-    }
+    var dateStrSlashed = dateStr.replace(_dateParser_re, "/");
     d = dateStrToMillis(dateStrSlashed);
-  } else {
-    // Any format that Date.parse will accept, e.g. "2009/07/12" or
-    // "2009/07/12 12:34:56"
-    d = dateStrToMillis(dateStr);
+    if (d != null && !isNaN(d)) return d;
   }
 
-  if (!d || isNaN(d)) {
-    console.error("Couldn't parse " + dateStr + " as a date");
-  }
-  return d;
+  // Any format that Date.parse will accept, e.g. "2009/07/12" or
+  // "2009/07/12 12:34:56"
+  d = dateStrToMillis(dateStr);
+  if (d != null && !isNaN(d)) return d;
+
+  console.error("Couldn't parse " + dateStr + " as a date");
+  return NaN;
 }
 
 /**
