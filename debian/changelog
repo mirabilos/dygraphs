@@ -1,3 +1,9 @@
+dygraphs (2.2.1-5) unstable; urgency=medium
+
+  * Adjust for breaking change in node-source-map (Closes: #1134275)
+
+ -- Thorsten Glaser <tg@mirbsd.de>  Sun, 26 Jul 2026 18:07:14 +0200
+
 dygraphs (2.2.1-4) unstable; urgency=low
 
   * Brown paper bag… this time without cutting any corners
