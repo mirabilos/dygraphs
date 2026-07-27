@@ -1,11 +1,12 @@
 dygraphs (2.2.2-1) unstable; urgency=medium
 
+  * “Could we please keep Debian unensloppified, tyvm?” upload
   * New upstream release
   * Adjust for breaking change in node-source-map (Closes: #1134275)
   * Bump Policy
   * Update lintian overrides
 
- -- Thorsten Glaser <tg@mirbsd.de>  Mon, 27 Jul 2026 02:28:33 +0200
+ -- Thorsten Glaser <tg@mirbsd.de>  Mon, 27 Jul 2026 05:30:45 +0200
 
 dygraphs (2.2.1-4) unstable; urgency=low
 
