@@ -1,11 +1,11 @@
-dygraphs (2.2.1-5) unstable; urgency=medium
+dygraphs (2.2.2-1) unstable; urgency=medium
 
   * New upstream release
   * Adjust for breaking change in node-source-map (Closes: #1134275)
   * Bump Policy
   * Update lintian overrides
 
- -- Thorsten Glaser <tg@mirbsd.de>  Sun, 26 Jul 2026 18:07:14 +0200
+ -- Thorsten Glaser <tg@mirbsd.de>  Mon, 27 Jul 2026 02:28:33 +0200
 
 dygraphs (2.2.1-4) unstable; urgency=low
 
