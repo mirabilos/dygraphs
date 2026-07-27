@@ -1,6 +1,8 @@
 dygraphs (2.2.1-5) unstable; urgency=medium
 
+  * New upstream release
   * Adjust for breaking change in node-source-map (Closes: #1134275)
+  * Bump Policy
 
  -- Thorsten Glaser <tg@mirbsd.de>  Sun, 26 Jul 2026 18:07:14 +0200
 
