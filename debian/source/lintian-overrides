@@ -22,3 +22,9 @@ dygraphs source: no-dep5-copyright
 
 # these are not published by GitHub
 dygraphs source: debian-watch-does-not-check-openpgp-signature
+
+# backwards compatibility
+dygraphs source: older-debian-watch-file-standard
+dygraphs source: package-uses-old-debhelper-compat-version
+dygraphs source: redundant-priority-optional-field
+dygraphs source: redundant-rules-requires-root-no-field
