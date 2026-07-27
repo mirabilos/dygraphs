@@ -19,12 +19,13 @@
   "license": "MIT",
   "author": "Dan Vanderkam <danvdk@gmail.com>",
   "files": [
-    "_site",
     "dist",
+    "src",
+    "src-es5",
+    "CHANGES.md",
     "index.es5.js",
     "index.js",
-    "src",
-    "src-es5"
+    "_site"
   ],
   "main": "index.es5",
   "module": "index",
@@ -39,7 +40,7 @@
     "clean": "mksh scripts/clean.sh",
     "coverage": "mksh scripts/generate-coverage.sh",
     "site": "mksh scripts/run-site.sh",
-    "prepack": "rm -rf _site && cp -Lr site _site && pax -rw -l LICENSE.txt README.md _site/ && jdupes -rL dist _site src src-es5 && cd _site && mksh ../scripts/mkdiridx.sh --ah '<a href=\"https://www.npmjs.com/package/dygraphs\">dygraphs</a> manual integration tests' ./tests",
+    "prepack": "rm -rf _site && cp -Lr site _site && rm -f _site/LICENSE.txt _site/README.md && cp -Lr LICENSE.txt README.md _site/ && cd _site && mksh ../scripts/mkdiridx.sh --ah '<a href=\"https://www.npmjs.com/package/dygraphs\">dygraphs</a> manual integration tests' ./tests",
     "postpack": "rm -rf _site",
     "watch": "mksh scripts/watch.sh",
     "test": "mksh scripts/run-tests.sh",
