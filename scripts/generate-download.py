@@ -77,6 +77,8 @@ print('''<!--#set var="pagetitle" value="downloads list" -->
  The former only contains the source code needed to build all of it;
  distro packagers will want that file.</p>
 
+<fieldset><legend>Content Delivery Networks</legend>
+
 <p>There's a hosted version of dygraphs on <a
  href="https://unpkg.com/dygraphs/">UNPKG</a>:</p>
 
@@ -85,13 +87,32 @@ print('''<!--#set var="pagetitle" value="downloads list" -->
 </pre>
 
 <p>There's a hosted version of dygraphs on <a
- href="https://cdnjs.com/libraries/dygraph">cdnjs.com</a>:</p>
+ href="https://www.jsdelivr.com/package/npm/dygraphs">jsDelivr</a>:</p>
+
+<pre>&lt;link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/dygraphs@%(version)s/dist/dygraph.min.css" /&gt;
+&lt;script type="text/javascript" src="https://cdn.jsdelivr.net/npm/dygraphs@%(version)s/dist/dygraph.min.js"&gt;&lt;/script&gt;
+</pre>
+
+<p>Note: if you wish to use jsDelivr’s ESM feature, you need to replace
+ <tt>import * as dygraphs from 'https://esm.run/dygraphs';</tt>, which is the string they give you, with
+ <tt>import Dygraph from 'https://esm.run/dygraphs';</tt>, i.e. replace
+ the <tt>* as dygraphs</tt> part with <tt>Dygraph</tt> so to have that
+ symbol available.<br />You’ll <em>also</em> still need to include the
+ CSS separately.</p>
+
+<p>There's a hosted version of dygraphs on <a
+ href="https://cdnjs.com/libraries/dygraph">cdnjs.com</a>
+ (note that it may take some time to update to new releases):</p>
 
 <pre>&lt;link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/dygraph/%(version)s/dygraph.min.css" /&gt;
 &lt;script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/dygraph/%(version)s/dygraph.min.js"&gt;&lt;/script&gt;
 </pre>
 
-<p>But note that use of CDNs violates the EU-GDPR. Besides the tarballs
+<p class="nomarginbottom">But note that use of CDNs violates the EU-GDPR.</p>
+
+</fieldset>
+
+<p>Besides the tarballs
  (see above) you can also install dygraphs locally into your project
  instead using <a href="https://www.npmjs.com/package/dygraphs">NPM</a>:</p>
 

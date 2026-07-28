@@ -1,3 +1,21 @@
+# next (git)
+
+## Breaking changes
+- …
+
+## New features
+- …
+
+## Bugfixes
+- …
+
+## Other user-visible changes
+- Link to jsDelivr as CDN as well (to keep neutral; use of CDNs in websites violates the EU-GDPR)
+- …
+
+## Internal refactors/fixes
+- …
+
 # v2.2.2 (2026-07-26)
 
 ## New features
