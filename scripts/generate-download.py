@@ -108,7 +108,8 @@ print('''<!--#set var="pagetitle" value="downloads list" -->
 &lt;script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/dygraph/%(version)s/dygraph.min.js"&gt;&lt;/script&gt;
 </pre>
 
-<p class="nomarginbottom">But note that use of CDNs violates the EU-GDPR.</p>
+<p class="nomarginbottom">But note that use of CDNs at runtime, instead of
+ serving the files yourself, violates the EU-GDPR.</p>
 
 </fieldset>
 <fieldset><legend>Install from binary packages</legend>
