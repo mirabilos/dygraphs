@@ -19,7 +19,19 @@ else
 	# Debian packaging
 	babel_js=babeljs
 fi
-babelrc=$PWD/babel.config.json
+babel_ver=$($babel_js --version) || babel_ver=ERROR
+if [[ $babel_ver != [1-9]*([0-9]).* ]]; then
+	print -ru2 -- 'E: cannot determine babeljs version'
+	print -ru2 -- "N: $babel_ver"
+	exit 255
+fi
+babel_ver=${babel_ver%%.*}
+if (( babel_ver < 8 )); then
+	babel_ver=7
+else
+	babel_ver=8
+fi
+babelrc=$PWD/babel$babel_ver.config.json
 set -x
 
 # obtain dygraphs version…

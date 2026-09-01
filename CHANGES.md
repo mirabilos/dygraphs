@@ -10,7 +10,7 @@
 - …
 
 ## Other user-visible changes
-- Link to jsDelivr as CDN as well (to keep neutral; use of CDNs in websites violates the EU-GDPR)
+- Link to jsDelivr as CDN as well (to keep neutral; use of CDNs in websites at runtime violates the EU-GDPR)
 - …
 
 ## Internal refactors/fixes
@@ -125,7 +125,7 @@ This is the first “full” release after v2.1.0 with the following news:
 - Fix documentation/website HTML/CSS/JS bugs (#979) (#1008)
 - On the website, external links are now clearly labelled
 - The documentation and website now have browsable subdirectories by manually generated directory index files
-- Link to UNPKG as CDN as well (to keep neutral; use of CDNs in websites violates the EU-GDPR)
+- Link to UNPKG as CDN as well (to keep neutral; use of CDNs in websites at runtime violates the EU-GDPR)
 - Most issues with right-to-left languages should now be fixed (#1019)
 - Document that Dygraph will misbehave if the main div has padding
 

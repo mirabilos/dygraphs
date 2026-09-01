@@ -1,0 +1,17 @@
+{
+  "plugins": [
+    "@babel/plugin-transform-strict-mode",
+    "add-module-exports"
+  ],
+  "presets": [
+    [
+      "@babel/env",
+      {
+        "exclude": [
+          "@babel/plugin-transform-typeof-symbol"
+        ],
+        "modules": "auto"
+      }
+    ]
+  ]
+}
