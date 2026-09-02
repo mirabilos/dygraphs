@@ -74,7 +74,6 @@
     "parse-data-uri": "^0.2.0",
     "phantomjs": "1.9.7-15",
     "phantomjs-function-bind-polyfill": "^1.0.0",
-    "pre-commit": "^1.0.6",
     "source-map": "^0.6.1",
     "uglify-js": "^3.17.4",
     "watchify": "^4.0.0"
