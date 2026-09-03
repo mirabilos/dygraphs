@@ -12,7 +12,7 @@ set -o pipefail
 unset LANGUAGE
 export LC_ALL=C.UTF-8 DEBIAN_FRONTEND=noninteractive
 
-echo init >.deb.statefile
+echo init >.github/deb-workflow/statefile
 wd=$(realpath .)
 [[ $wd = /* ]]
 me=$(realpath "$0")
@@ -24,7 +24,7 @@ db=$dr/build
 mkdir "$dr"
 
 switchstate() {
-	printf '%s\n' "$*" >"$wd/.deb.statefile"
+	printf '%s\n' "$*" >"$wd/.github/deb-workflow/statefile"
 }
 
 switchgroup Setup $0 on Debian $2
@@ -81,14 +81,14 @@ switchgroup Set up NPM, to run the tests
 switchstate npm-setup
 # phantomjs needs libfontconfig and libfreetype
 eatmydata apt-get install -y fontconfig npm
-eatmydata env TMPDIR=/tmp npm install -g phantomjs@1.9.7-15
 chown -R bauer repo
+su - bauer -c 'cd ../repo && eatmydata env TMPDIR=/tmp npm install --no-save phantomjs@1.9.20'
 su - bauer -c 'cd ../repo && eatmydata env TMPDIR=/tmp npm install'
 switchstate npm-test-source
 switchgroup Run tests
-su - bauer -c 'cd ../repo && eatmydata npm run test'
+su - bauer -c 'cd ../repo && eatmydata env TMPDIR=/tmp npm run test'
 switchstate npm-test-min
-su - bauer -c 'cd ../repo && eatmydata npm run test-min'
+su - bauer -c 'cd ../repo && eatmydata env TMPDIR=/tmp npm run test-min'
 
 echo ::endgroup::
 switchstate klaar

@@ -118,7 +118,7 @@ print('''<!--#set var="pagetitle" value="downloads list" -->
  (see above) you can also install dygraphs locally into your project
  instead using <a href="https://www.npmjs.com/package/dygraphs">NPM</a>:</p>
 
-<pre>$ npm install dygraphs
+<pre>$ env TMPDIR=/tmp npm install dygraphs
   # dygraphs is now in node_modules/dygraphs/dist/dygraph.{css,js} for
   # the browser, and node_modules/dygraphs/index{,.es5}.js for nodejs</pre>
 
@@ -151,8 +151,8 @@ $ sudo a2enconf javascript-common.conf &amp;&amp; sudo service apache2 reload
 
 <pre>git clone https://github.com/danvk/dygraphs.git
 cd dygraphs
-npm install
-npm run build-jsonly
+env TMPDIR=/tmp npm install
+env TMPDIR=/tmp npm run build-jsonly
 </pre>
 
 <p>This will create a <tt>dygraph.min.css</tt> and a <tt>dygraph.min.js</tt>

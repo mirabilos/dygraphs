@@ -22,8 +22,11 @@ export LC_ALL=C
 unset LANGUAGE
 
 set -o pipefail
-rm -f .post.state
-if test -h .post.state || test -e .post.state; then exit 255; fi
+rm -f .github/build-workflow/statefile
+if test -h .github/build-workflow/statefile || \
+   test -e .github/build-workflow/statefile; then
+	exit 255
+fi
 state=''
 
 $sudoagi eatmydata
@@ -38,15 +41,15 @@ $sudoagi eatmydata git \
 : drop any pre-installed PhantomJS as they cause breakage
 bash -c 'set -o noglob; while true; do found=0; for x in $(which -a phantomjs); do test -e "$x" || continue; found=1; rm -f "$x"; done; test $found = 1 || break; done'
 
-eatmydata env TMPDIR=/tmp npm install -g phantomjs@1.9.7-15
+eatmydata env TMPDIR=/tmp npm install --no-save phantomjs@1.9.20
 eatmydata env TMPDIR=/tmp npm install
 
-(eatmydata npm run clean || :)
-eatmydata npm run build
-eatmydata npm run test || state="$state test"
-eatmydata npm run test-min || state="$state test-min"
+(eatmydata env TMPDIR=/tmp npm run clean || :)
+eatmydata env TMPDIR=/tmp npm run build
+eatmydata env TMPDIR=/tmp npm run test || state="$state test"
+eatmydata env TMPDIR=/tmp npm run test-min || state="$state test-min"
 if [[ $GITHUB_REPOSITORY = danvk/dygraphs ]]; then
-	eatmydata npm run coverage || state="$state coverage"
+	eatmydata env TMPDIR=/tmp npm run coverage || state="$state coverage"
 	eatmydata mksh scripts/post-coverage.sh || state="$state post-coverage"
 	eatmydata mksh scripts/weigh-in.sh || state="$state weigh-in"
 fi
@@ -69,4 +72,4 @@ if [[ -n $imprint_text ]]; then
 fi
 cd ..
 set -o noglob
-echo $state >.post.state
+echo $state >.github/build-workflow/statefile
