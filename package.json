@@ -79,7 +79,7 @@
     "watchify": "^4.0.0"
   },
   "overrides": {
-    "phantomjs": "1.9.20"
+    "phantomjs": "$phantomjs"
   },
   "engines": {
     "npm": ">=8.3.0"
