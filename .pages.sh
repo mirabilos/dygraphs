@@ -41,12 +41,12 @@ bash -c 'set -o noglob; while true; do found=0; for x in $(which -a phantomjs); 
 eatmydata env TMPDIR=/tmp npm install phantomjs@1.9.7-15
 eatmydata env TMPDIR=/tmp npm install
 
-(eatmydata npm run clean || :)
-eatmydata npm run build
-eatmydata npm run test || state="$state test"
-eatmydata npm run test-min || state="$state test-min"
+(eatmydata env TMPDIR=/tmp npm run clean || :)
+eatmydata env TMPDIR=/tmp npm run build
+eatmydata env TMPDIR=/tmp npm run test || state="$state test"
+eatmydata env TMPDIR=/tmp npm run test-min || state="$state test-min"
 if [[ $GITHUB_REPOSITORY = danvk/dygraphs ]]; then
-	eatmydata npm run coverage || state="$state coverage"
+	eatmydata env TMPDIR=/tmp npm run coverage || state="$state coverage"
 	eatmydata mksh scripts/post-coverage.sh || state="$state post-coverage"
 	eatmydata mksh scripts/weigh-in.sh || state="$state weigh-in"
 fi

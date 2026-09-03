@@ -21,17 +21,17 @@ To install dependencies, run:
     # for building
     apt-get install jq mksh pax python3
     # npm dev dependencies
-    npm install
+    env TMPDIR=/tmp npm install
 
 To build dygraphs and the tests, run:
 
-    npm run clean  # if necessary
-    npm run build-jsonly
+    env TMPDIR=/tmp npm run clean  # if necessary
+    env TMPDIR=/tmp npm run build-jsonly
 
 To run the tests, run:
 
-    npm run test       # on the unminified bundle
-    npm run test-min   # on the .min.{css,js}
+    env TMPDIR=/tmp npm run test       # on the unminified bundle
+    env TMPDIR=/tmp npm run test-min   # on the .min.{css,js}
 
 The prerequisites for a full “npm run build” are:
 
@@ -42,7 +42,7 @@ The prerequisites for a full “npm run build” are:
 
 To iterate on the code, install envify and run:
 
-    npm run watch
+    env TMPDIR=/tmp npm run watch
 
 and open `tests/demo.html` (or one of the other demos) in your browser.
 
@@ -55,7 +55,7 @@ Or you can change `it` to `it.only` to do run just one test in code.
 
 To run a single test from the command line, you can use:
 
-  npm run test -- --grep highlight-series-background
+    env TMPDIR=/tmp npm run test -- --grep highlight-series-background
 
 (Note the extra `--`.)
 

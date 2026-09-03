@@ -50,7 +50,7 @@ from [UNPKG][], [jsDelivr][], [cdnjs][] or [NPM][] (see below).
 
 Get dygraphs from NPM:
 
-    npm install dygraphs
+    env TMPDIR=/tmp npm install dygraphs
 
 **Do not install from the git repository!** Always use a tarball install,
 which contains the prebuilt files; `npm` fails to build the source code
@@ -79,8 +79,8 @@ To get going, install the following Debian packages…
 
 … clone the repo and run:
 
-    npm install
-    npm run build-jsonly
+    env TMPDIR=/tmp npm install
+    env TMPDIR=/tmp npm run build-jsonly
 
 Then open `tests/demo.html` in your browser.
 

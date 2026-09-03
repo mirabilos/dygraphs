@@ -29,7 +29,7 @@ print -r -- "${curpkg%\}}" \
     "}" | jq . >package.json
 
 set +e
-npm_config_registry=https://npm.pkg.github.com npm publish "$@"
+npm_config_registry=https://npm.pkg.github.com TMPDIR=/tmp npm publish "$@"
 rv=$?
 git checkout package.json || rv=255
 exit $rv

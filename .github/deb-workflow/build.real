@@ -86,9 +86,9 @@ su - bauer -c 'cd ../repo && eatmydata env TMPDIR=/tmp npm install phantomjs@1.9
 su - bauer -c 'cd ../repo && eatmydata env TMPDIR=/tmp npm install'
 switchstate npm-test-source
 switchgroup Run tests
-su - bauer -c 'cd ../repo && eatmydata npm run test'
+su - bauer -c 'cd ../repo && eatmydata env TMPDIR=/tmp npm run test'
 switchstate npm-test-min
-su - bauer -c 'cd ../repo && eatmydata npm run test-min'
+su - bauer -c 'cd ../repo && eatmydata env TMPDIR=/tmp npm run test-min'
 
 echo ::endgroup::
 switchstate klaar

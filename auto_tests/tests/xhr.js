@@ -5,7 +5,7 @@
  * XHRs can't be issued from file:/// URLs.
  * This can be done with
  *
- *     npm install http-server
+ *     env TMPDIR=/tmp npm install http-server
  *     http-server -p 8081
  *     open http://localhost:8081/auto_tests/runner.html
  *
