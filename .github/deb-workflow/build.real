@@ -12,7 +12,7 @@ set -o pipefail
 unset LANGUAGE
 export LC_ALL=C.UTF-8 DEBIAN_FRONTEND=noninteractive
 
-echo init >.github/deb-workflow/statefile
+echo init >.deb.statefile
 wd=$(realpath .)
 [[ $wd = /* ]]
 me=$(realpath "$0")
@@ -24,7 +24,7 @@ db=$dr/build
 mkdir "$dr"
 
 switchstate() {
-	printf '%s\n' "$*" >"$wd/.github/deb-workflow/statefile"
+	printf '%s\n' "$*" >"$wd/.deb.statefile"
 }
 
 switchgroup Setup $0 on Debian $2
