@@ -7,6 +7,7 @@
 - …
 
 ## Bugfixes
+- Unbreak build with babeljs 8 (Debian #1146315)
 - …
 
 ## Other user-visible changes
@@ -14,6 +15,9 @@
 - …
 
 ## Internal refactors/fixes
+- Update phantomjs and tighten npm config for more reliability
+- Run GHA builds to test both npm build and Debian builds, in both trixie and sid, with npm test{,-min} afterwards, to detect problems better
+- Optimise images
 - …
 
 # v2.2.2 (2026-07-26)
@@ -29,7 +33,7 @@
 - Drop “comments are OK on data lines” from the CSV documentation, as the CSV file format has no notion of a comment, and the current code merely strips lines beginning with an octothorpe and reportedly sometimes also parts of fields, but (obviously) the field separator can then not be used within a comment
 - Document that the input data should be sorted (#503)
 - Make date parsing more robust and in particular, allow the epoch (#1062)
-- Work around breaking changes in newer node-source-map (Debian#1134275)
+- Work around breaking changes in newer node-source-map (Debian #1134275)
 
 ## Other user-visible changes
 - Add talk link to `tutorial.html`
