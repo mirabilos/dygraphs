@@ -82,7 +82,7 @@ switchstate npm-setup
 # phantomjs needs libfontconfig and libfreetype
 eatmydata apt-get install -y fontconfig npm
 chown -R bauer repo
-su - bauer -c 'cd ../repo && eatmydata env TMPDIR=/tmp npm install phantomjs@1.9.7-15'
+su - bauer -c 'cd ../repo && eatmydata env TMPDIR=/tmp npm install phantomjs@1.9.20'
 su - bauer -c 'cd ../repo && eatmydata env TMPDIR=/tmp npm install'
 switchstate npm-test-source
 switchgroup Run tests
