@@ -22,8 +22,11 @@ export LC_ALL=C
 unset LANGUAGE
 
 set -o pipefail
-rm -f .post.state
-if test -h .post.state || test -e .post.state; then exit 255; fi
+rm -f .github/build-workflow/statefile
+if test -h .github/build-workflow/statefile || \
+   test -e .github/build-workflow/statefile; then
+	exit 255
+fi
 state=''
 
 $sudoagi eatmydata
@@ -69,4 +72,4 @@ if [[ -n $imprint_text ]]; then
 fi
 cd ..
 set -o noglob
-echo $state >.post.state
+echo $state >.github/build-workflow/statefile

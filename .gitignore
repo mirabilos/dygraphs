@@ -1,4 +1,5 @@
 *.log
+.github/*/statefile
 __pycache__
 _site
 coverage
