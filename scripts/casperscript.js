@@ -3,7 +3,7 @@
 //
 // Suggested usage:
 //
-//     env TMPDIR=/tmp npm install casperjs
+//     env TMPDIR=/tmp npm install --no-save casperjs
 //     for x in tests/*.html; casperjs scripts/casperscript.js $x
 
 var casper = require('casper').create({

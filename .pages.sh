@@ -38,7 +38,7 @@ $sudoagi eatmydata git \
 : drop any pre-installed PhantomJS as they cause breakage
 bash -c 'set -o noglob; while true; do found=0; for x in $(which -a phantomjs); do test -e "$x" || continue; found=1; rm -f "$x"; done; test $found = 1 || break; done'
 
-eatmydata env TMPDIR=/tmp npm install phantomjs@1.9.20
+eatmydata env TMPDIR=/tmp npm install --no-save phantomjs@1.9.20
 eatmydata env TMPDIR=/tmp npm install
 
 (eatmydata env TMPDIR=/tmp npm run clean || :)
