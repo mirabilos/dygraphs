@@ -14,7 +14,7 @@ export LC_ALL=C.UTF-8 DEBIAN_FRONTEND=noninteractive
 
 set +x
 switchgroup Check whether build failed anywhere
-state=$(cat .github/deb-workflow/statefile || echo state-file-missing)
+state=$(cat .deb.statefile || echo state-file-missing)
 if [[ $state != klaar ]]; then
 	echo "E: build failed in: $state"
 	exit 1

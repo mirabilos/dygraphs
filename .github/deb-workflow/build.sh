@@ -12,7 +12,7 @@ case $me in
 esac
 test -s "$me" || { echo 'E: I am empty?'; exit 255; }
 
-if test -e .github/deb-workflow/statefile; then
+if test -e .deb.statefile; then
 	echo 'E: repeat run, working directory not clean'
 	exit 255
 fi
