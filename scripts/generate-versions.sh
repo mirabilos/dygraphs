@@ -28,6 +28,8 @@ sed \
     -e 's!>!\&gt;!g' \
     -e 's!"!\&#34;!g' \
     -e 's!\[\([^]]*\)\](\(https*://[!-~]*\))!<a href="\2">\1</a>!g' \
+    -e 's!#\([1-9][0-9]\{2,\}\)!<a href="https://github.com/danvk/dygraphs/issues/\1">#\1</a>!g' \
+    -e 's!Debian <a href="[^"]*">#\([0-9]*\)</a>!<a href="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=\1">Debian #\1</a>!g' \
     -e 's!\([ >]\)`\([^`]*\)`!\1<tt>\2</tt>!g' \
     <CHANGES.md |&
 in_tr=0
