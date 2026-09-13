@@ -1,6 +1,6 @@
 Here's what it looks like:
 
-![screen recording](smooth-plotter-p1-recording.gif)
+![screen recording](smooth-plotter-p1-recording.png)
 
 This uses cubic splines (aka bezier curves) to smooth out the lines
 between points. To draw a bezier curve between two points, you must also
