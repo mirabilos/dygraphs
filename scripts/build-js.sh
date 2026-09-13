@@ -19,7 +19,19 @@ else
 	# Debian packaging
 	babel_js=babeljs
 fi
-babelrc=$PWD/babel.config.json
+babel_ver=$($babel_js --version) || babel_ver=ERROR
+if [[ $babel_ver != [1-9]*([0-9]).* ]]; then
+	print -ru2 -- 'E: cannot determine babeljs version'
+	print -ru2 -- "N: $babel_ver"
+	exit 255
+fi
+babel_ver=${babel_ver%%.*}
+if (( babel_ver < 8 )); then
+	babel_ver=7
+else
+	babel_ver=8
+fi
+babelrc=$PWD/babel$babel_ver.config.json
 set -x
 
 # obtain dygraphs version…
@@ -71,6 +83,7 @@ patchedbrowserpack=$PWD/.node_override/browser-pack.js
 export origbrowserpack origpreludefile patchedbrowserpack
 cat >"$patchedbrowserpack" <<\EOF
 	const fs = require('fs');
+	const path = require('path');
 	const orig = require(process.env.origbrowserpack);
 
 	module.exports = function (opts) {
@@ -78,6 +91,8 @@ cat >"$patchedbrowserpack" <<\EOF
 			opts = {};
 		if (!opts.prelude && !opts.preludePath) {
 			var pf = process.env.origpreludefile;
+			if (!pf.startsWith('/usr/'))
+				pf = path.relative(process.cwd(), pf);
 			var pc = fs.readFileSync(pf, 'utf8');
 			pc = pc.trimEnd() + '/*}}}browser-pack*//*Dygraph(((*/';
 			opts.preludePath = pf;
