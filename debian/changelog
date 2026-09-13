@@ -1,3 +1,9 @@
+dygraphs (2.2.2-2) unstable; urgency=high
+
+  * fix FTBFS in sid with newer babeljs (Closes: #1146315)
+
+ -- Thorsten Glaser <tg@mirbsd.de>  Sun, 13 Sep 2026 06:19:09 +0200
+
 dygraphs (2.2.2-1) unstable; urgency=medium
 
   * “Could we please keep Debian unensloppified, tyvm?” upload
